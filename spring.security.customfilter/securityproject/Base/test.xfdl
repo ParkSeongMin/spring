@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="test" classname="test" left="0" top="0" width="1024" height="768" titletext="New Form">
+    <Layouts>
+      <Layout>
+        <Button id="login" taborder="0" text="login" left="42.38%" top="24" right="43.75%" height="64" onclick="login_onclick"/>
+        <Button id="logout" taborder="1" text="logout" left="42.38%" top="104" right="43.75%" height="64"/>
+        <Button id="anonymous" taborder="2" text="anonymous service" left="9.77%" top="104" right="76.37%" height="64" onclick="anonymous_onclick"/>
+        <Button id="authenticated" taborder="3" text="authenticated service" left="25.49%" top="104" right="60.64%" height="64" onclick="authenticated_onclick"/>
+        <Edit id="edit_id" taborder="4" left="9.38%" top="30" right="75.88%" height="29"/>
+        <Edit id="edit_pw" taborder="5" left="25.1%" top="30" right="60.16%" height="29"/>
+        <Button id="anonymous00" taborder="6" text="remember-me" left="59.38%" top="16" right="26.76%" height="64"/>
+        <Grid id="Grid00" taborder="7" useinputpanel="false" left="9.08%" top="235" right="64.06%" height="93" binddataset="dsResult" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" disptype="normal" text="result"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" disptype="normal" text="bind:result"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.0"><![CDATA[var url = "http://localhost:8081/custom/";
+
+
+this.fn_callback = function(serviceId, errorCode, errorMsg)
+{
+	this.alert(serviceId +": errorCode("+ errorCode +"), errorMsg(" + errorMsg+")");
+}
+
+this.login_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	var serviceId = "nexacro/login";
+	var serviceUrl = url + serviceId;
+	var args = "id="+this.edit_id.text+" pw="+this.edit_pw.text;
+	
+	this.transaction(serviceId, serviceUrl, "", "dsResult=dsResult", args, "fn_callback");
+}
+
+
+this.authenticated_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	var serviceId = "nexacro/service";
+	var serviceUrl = url + serviceId;
+	var args = "test=test";
+	
+	this.transaction(serviceId, serviceUrl, "", "dsResult=dsResult", args, "fn_callback");
+}
+
+this.anonymous_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	var serviceId = "nexacro/anonymous";
+	var serviceUrl = url + serviceId;
+	var args = "test=test";
+	
+	this.transaction(serviceId, serviceUrl, "", "dsResult=dsResult", args, "fn_callback");
+}
+]]></Script>
+  </Form>
+</FDL>

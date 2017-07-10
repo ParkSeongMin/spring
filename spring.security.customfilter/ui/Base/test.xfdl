@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="test" classname="test" left="0" top="0" width="1024" height="768" titletext="New Form">
+    <Layouts>
+      <Layout>
+        <Button id="login" taborder="0" text="login" left="4.69%" top="40" right="85.55%" height="45"/>
+        <Button id="annonymous" taborder="1" text="anonymous service" left="3.42%" top="131" right="83.01%" height="93"/>
+        <Button id="Button04" taborder="4" text="access denied" left="40.63%" top="35" right="47.66%" height="50"/>
+        <Button id="annonymous00" taborder="5" text="anonymous service" left="18.26%" top="131" right="68.16%" height="93"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>

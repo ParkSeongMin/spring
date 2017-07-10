@@ -1,0 +1,61 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<http auto-config="true" use-expressions="true" entry-point-ref="authenticationEntryPoint" create-session="ifRequired">
+		<custom-filter ref="customNexacroFilter" before="FORM_LOGIN_FILTER" />	
+		<access-denied-handler ref="accessDeniedHandler"/>
+			
+		<intercept-url pattern="/anonymous**" access="permitAll" />
+		<intercept-url pattern="/user**" access="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+		
+		<intercept-url pattern="/nexacro/anonymous**" access="permitAll" />
+		<intercept-url pattern="/nexacro/service**" access="hasRole('ROLE_USER')" />
+		
+		<csrf disabled="true" />
+	</http>
+
+	
+	<!-- <beans:bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" /> -->
+	<beans:bean id="authenticationEntryPoint" class="com.minky.spring.security.NexacroAuthenticationEntryPoint" />
+	<beans:bean id="accessDeniedHandler" class="com.minky.spring.security.NexacroAccessDeniedHandler" />
+
+
+	<beans:bean id="customNexacroFilter" class="com.minky.spring.security.NexacroAuthenticationFilter">
+
+		<!-- <beans:property name="filterProcessesUrl" value="/resources/j_spring_security_check" /> -->
+		<!-- <beans:property name="filterProcessesUrl" value="/login" /> -->
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler" >
+			<beans:bean
+				class="com.minky.spring.security.NexacroAuthenticationSuccessHandler"/>
+		</beans:property>
+		
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean
+				class="com.minky.spring.security.NexacroAuthenticationFailureHandler"/>
+				<!-- 
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<beans:property name="defaultFailureUrl" value="/login?error" />
+			</beans:bean>
+			 -->
+		</beans:property>
+	</beans:bean>
+
+	<authentication-manager id="authenticationManager">
+		<authentication-provider>
+			<!-- <user-service properties="" > -->
+			<user-service>
+				<user name="admin" password="admin" authorities="ROLE_ADMIN" disabled="true"/>
+				<user name="user" password="user" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>
