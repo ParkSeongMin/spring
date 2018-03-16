@@ -12,3 +12,8 @@
 # test
 win: curl -v -H "Content-Type: application/json" -d {\"name\":\"sam\"} -X POST http://localhost:8080/spring.mvc/sample
 oth : curl -H "Content-Type: application/json" -X POST -d '{"name":"sam"}' http://localhost:8080/spring.mvc/sample
+
+# archetype
+* archetype:create-from-project
+* mvn install
+* add archetype
