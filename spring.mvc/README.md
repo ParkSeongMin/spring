@@ -17,3 +17,6 @@ oth : curl -H "Content-Type: application/json" -X POST -d '{"name":"sam"}' http:
 * archetype:create-from-project
 * mvn install
 * add archetype
+** group : org.springframework.samples.mvc
+** artifact : spring.mvc-archetype
+** version : 1.0.0
