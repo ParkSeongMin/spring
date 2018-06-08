@@ -10,7 +10,8 @@
 <body>
 	<div align="center">
 		<h1>Spring Security mvc default (XML)</h1>
-		<a href="admin">Go to Administrator Page</a>
+		<h1><a href="admin">Go to Administrator Page</a></h1>
+		<h1><a href="user">Go to User Page</a></h1>
 	</div>
 </body>
 </html>
