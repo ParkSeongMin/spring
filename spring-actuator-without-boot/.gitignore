@@ -1,0 +1,19 @@
+/target/
+*.class
+[Tt]humbs.db
+.DS_Store
+.settings/
+.classpath
+.project
+.factorypath
+/bin/
+/logs/
+/doc/
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# STS (Spring Tool Suite)
+.springBeans
+/working/
